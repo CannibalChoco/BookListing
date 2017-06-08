@@ -10,11 +10,6 @@ public class Book {
         this.title = title;
     }
 
-    public Book (String title){
-        this.author = author;
-        this.title = title;
-    }
-
     public String getAuthor() {
         return author;
     }

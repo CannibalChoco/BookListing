@@ -7,6 +7,10 @@ import android.util.Log;
 import java.util.List;
 
 
+/**
+ * Loads a list of books by using an AsyncTask to perform the
+ * network request to the given URL.
+ */
 public class BookLoader extends AsyncTaskLoader<List<Book>> {
 
     private static final String LOG_TAG = BookLoader.class.getName();
@@ -39,7 +43,7 @@ public class BookLoader extends AsyncTaskLoader<List<Book>> {
             return null;
         }
 
-        // Perform the HTTP request for earthquake data and process the response.
+        // Perform the HTTP request for book data and process the response.
         List<Book> books = QueryUtils.fetchBookData(url);
         return books;
     }

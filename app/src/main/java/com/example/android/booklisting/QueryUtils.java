@@ -23,7 +23,7 @@ import static android.os.Build.VERSION_CODES.M;
 
 
 /**
- * Helper methods to request and receive dook data form Google Books
+ * Helper methods to request and receive book data form Google Books
  */
 
 public class QueryUtils {
@@ -38,7 +38,7 @@ public class QueryUtils {
     }
 
     /**
-     * Query the USGS dataset and return an {@link List<Book>} objects to represent a single earthquake.
+     * Query the GoogleBooks dataset and return a list of {@link List<Book>} objects
      */
     public static List<Book> fetchBookData(String requestUrl) {
         Log.i(LOG_TAG, "TEST: fetchBookData() called ...");
@@ -54,10 +54,10 @@ public class QueryUtils {
             Log.e(LOG_TAG, "Problem making the HTTP request.", e);
         }
 
-        // Extract relevant fields from the JSON response and create an {@link Event} object
+        // Extract relevant fields from the JSON response and create list of {@link Book} objects
         List<Book> books = extractBooksFromJson(jsonResponse);
 
-        // Return the {@link Event}
+        // Return the list of {@link Book}s
         return books;
     }
 
@@ -144,7 +144,7 @@ public class QueryUtils {
             return null;
         }
 
-        // Create an empty ArrayList that we can start adding earthquakes to
+        // Create an empty ArrayList that we can start adding books to
         List<Book> books = new ArrayList<>();
 
         // Try to parse the SAMPLE_JSON_RESPONSE. If there's a problem with the way the JSON
@@ -158,8 +158,18 @@ public class QueryUtils {
                 JSONObject currentBook = bookArray.getJSONObject(i);
                 JSONObject volumeInfo = currentBook.getJSONObject("volumeInfo");
                 String title = volumeInfo.getString("title");
+                JSONArray authorArray = volumeInfo.getJSONArray("authors");
+                String author = "";
 
-                books.add(new Book(title));
+                for (int j = 0, m = authorArray.length(); j < m; j++){
+                    author = author + authorArray.getString(j);
+
+                    if (m > 1){
+                        author += ", ";
+                    }
+                }
+
+                books.add(new Book(author, title));
                 String data = books.toString();
                 Log.v("extractBooks", data);
             }
@@ -171,7 +181,7 @@ public class QueryUtils {
             Log.e(LOG_TAG, "Problem parsing the book JSON results", e);
         }
 
-        // Return the list of earthquakes
+        // Return the list of books
         return books;
     }
 }
