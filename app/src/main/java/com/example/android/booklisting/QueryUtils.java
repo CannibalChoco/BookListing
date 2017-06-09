@@ -41,8 +41,6 @@ public class QueryUtils {
      * Query the GoogleBooks dataset and return a list of {@link List<Book>} objects
      */
     public static List<Book> fetchBookData(String requestUrl) {
-        //Log.i(LOG_TAG, "TEST: fetchBookData() called ...");
-
         // Create URL object
         URL url = createUrl(requestUrl);
 

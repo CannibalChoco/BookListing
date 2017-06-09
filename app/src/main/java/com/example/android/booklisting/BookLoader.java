@@ -32,7 +32,6 @@ public class BookLoader extends AsyncTaskLoader<List<Book>> {
 
     @Override
     protected void onStartLoading() {
-        Log.i(LOG_TAG, "TEST: onStartLoading()");
         // good practice to put forceLoad() whithin the loader subclass
         forceLoad();
     }
@@ -40,7 +39,6 @@ public class BookLoader extends AsyncTaskLoader<List<Book>> {
     @Override
     public List<Book> loadInBackground() {
         // Don't perform the request if there are no URLs, or the first URL is null.
-        Log.i(LOG_TAG, "TEST: loadInBackground()");
         if ( url == null) {
             return null;
         }

@@ -17,7 +17,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -133,17 +132,13 @@ public class MainActivity extends AppCompatActivity implements
         return true;
     }
 
-
     @Override
     public Loader<List<Book>> onCreateLoader(int i, Bundle bundle) {
-        Log.i(LOG_TAG, "TEST: onCreateLoader()");
         return new BookLoader(this, queryUrl);
     }
 
     @Override
     public void onLoadFinished(Loader<List<Book>> loader, List<Book> books) {
-        Log.i(LOG_TAG, "TEST: onLoadFinished()");
-
         loadingIndicator.setVisibility(GONE);
         emptyStateTextView.setText(R.string.no_books_found);
 
@@ -157,11 +152,9 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onLoaderReset(Loader<List<Book>> loader) {
-        Log.i(LOG_TAG, "TEST: onLoaderReset()");
         queryUrl = null;
         adapter.clear();
     }
-
 
     /**
      * Concat the user query with the base url
