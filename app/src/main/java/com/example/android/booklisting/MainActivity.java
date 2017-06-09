@@ -42,11 +42,19 @@ public class MainActivity extends AppCompatActivity implements
         adapter = new BookAdapter(this, new ArrayList<Book>());
         bookListView.setAdapter(adapter);
 
-        handleIntent(getIntent());
+        // Get a reference to the LoaderManager to interact with loaders
+        loaderManager = getLoaderManager();
+        // Initialize the loader. Pass in the int ID constant defined above and pass in null for
+        // the bundle. Pass in this activity for the LoaderCallbacks parameter (which is valid
+        // because this activity implements the LoaderCallbacks interface).
+        Log.i(LOG_TAG, "TEST: initLoader()");
+        loaderManager.initLoader(BOOK_LOADER_ID, null, MainActivity.this);
+
+        //handleIntent(getIntent());
 
     }
 
-
+/*
     @Override
     protected void onNewIntent(Intent intent) {
         handleIntent(intent);
@@ -58,18 +66,11 @@ public class MainActivity extends AppCompatActivity implements
             String query = intent.getStringExtra(SearchManager.QUERY);
 
             createQueryUrl(query);
-            Log.i(LOG_TAG, "TEST: QUERY: " + queryUrl);
+            Log.i(LOG_TAG, "TEST: QUERY in handleIntent: " + queryUrl);
 
-            // Get a reference to the LoaderManager to interact with loaders
-            loaderManager = getLoaderManager();
-            // Initialize the loader. Pass in the int ID constant defined above and pass in null for
-            // the bundle. Pass in this activity for the LoaderCallbacks parameter (which is valid
-            // because this activity implements the LoaderCallbacks interface).
-            Log.i(LOG_TAG, "TEST: calling initLoader() ...");
-
-            loaderManager.initLoader(BOOK_LOADER_ID, null, this);
         }
     }
+*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -85,7 +86,22 @@ public class MainActivity extends AppCompatActivity implements
 
             @Override
             public boolean onQueryTextSubmit(String query) {
-                return false;
+                //Log.i(LOG_TAG, "TEST: Entering onQueryTextSubmit()");
+                //Log.i(LOG_TAG, "TEST: current query: " + query);
+                //Log.i(LOG_TAG, "TEST: current query url: " + queryUrl);
+
+                // create new query url
+                //Log.i(LOG_TAG, "TEST: creating query url");
+                createQueryUrl(query);
+                //Log.i(LOG_TAG, "TEST: url: " + queryUrl);
+
+                // restart loader
+                //Log.i(LOG_TAG, "TEST: restarting Loader");
+                getLoaderManager().restartLoader(BOOK_LOADER_ID, null, MainActivity.this);
+
+
+
+                return true;
             }
 
             @Override
@@ -100,15 +116,16 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public Loader<List<Book>> onCreateLoader(int i, Bundle bundle) {
-        Log.i(LOG_TAG, "TEST: onCreateLoader() called ...");
+        Log.i(LOG_TAG, "TEST: onCreateLoader()");
         return new BookLoader(this, queryUrl);
     }
 
     @Override
     public void onLoadFinished(Loader<List<Book>> loader, List<Book> books) {
-        Log.i(LOG_TAG, "TEST: onLoadFinished() called ...");
+        Log.i(LOG_TAG, "TEST: onLoadFinished()");
+
         adapter.clear();
-        // If there is a valid list of {@link EarthquakeBook}s, then add them to the adapter's
+        // If there is a valid list of {@link Book}s, then add them to the adapter's
         // data set. This will trigger the ListView to update.
         if (books != null && !books.isEmpty()) {
             adapter.addAll(books);
@@ -118,8 +135,9 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onLoaderReset(Loader<List<Book>> loader) {
-        loaderManager.destroyLoader(BOOK_LOADER_ID);
-        Log.i(LOG_TAG, "TEST: onLoaderReset() called ...");
+        Log.i(LOG_TAG, "TEST: onLoaderReset()");
+        // loaderManager.destroyLoader(BOOK_LOADER_ID);
+        queryUrl = null;
         adapter.clear();
     }
 
