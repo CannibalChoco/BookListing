@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="margin_sides">16dp</dimen>
-    <dimen name="margin_between_text_views">8dp</dimen>
+    <dimen name="margin_average">16dp</dimen>
+    <dimen name="margin_author_left">20dp</dimen>
+    <dimen name="margin_small">8dp</dimen>
 
 </resources>

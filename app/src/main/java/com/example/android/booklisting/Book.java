@@ -1,23 +1,23 @@
 package com.example.android.booklisting;
 
 
-import android.graphics.drawable.Drawable;
-import android.widget.ImageView;
-
 public class Book {
     private String author;
     private String title;
     private String description;
-
-    public Book (String author, String title){
-        this.author = author;
-        this.title = title;
-    }
+    private String url;
 
     public Book (String author, String title, String description){
         this.author = author;
         this.title = title;
         this.description = description;
+    }
+
+    public Book (String author, String title, String description, String url){
+        this.author = author;
+        this.title = title;
+        this.description = description;
+        this.url = url;
     }
 
     public String getTitle() {
@@ -28,5 +28,9 @@ public class Book {
 
     public String getDescription() {
         return description;
+    }
+
+    public String getUrl() {
+        return url;
     }
 }

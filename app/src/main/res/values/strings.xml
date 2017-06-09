@@ -8,4 +8,8 @@
     <string name="no_books_found">No books were found</string>
 
     <string name="no_searches_made">You haven\'t searched any books yet</string>
+
+    <string name="by_author">by </string>
+
+    <string name="more_info">More info</string>
 </resources>

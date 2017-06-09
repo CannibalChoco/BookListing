@@ -159,18 +159,19 @@ public class QueryUtils {
                 JSONObject volumeInfo = currentBook.getJSONObject("volumeInfo");
                 String title = volumeInfo.getString("title");
                 String description = volumeInfo.getString("description");
+                String previewLink = volumeInfo.getString("previewLink");
                 JSONArray authorArray = volumeInfo.getJSONArray("authors");
                 String author = "";
 
                 for (int j = 0, m = authorArray.length(); j < m; j++){
                     author = author + authorArray.getString(j);
 
-                    if (m > 1){
+                    if (m > 1 && j != (m - 1)){
                         author += ", ";
                     }
                 }
 
-                books.add(new Book(author, title, description));
+                books.add(new Book(author, title, description, previewLink));
                 String data = books.toString();
                 Log.v("extractBooks", data);
             }

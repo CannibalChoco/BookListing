@@ -2,12 +2,10 @@ package com.example.android.booklisting;
 
 
 import android.app.Activity;
-import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -37,6 +35,9 @@ public class BookAdapter extends ArrayAdapter{
 
         TextView descriptionTextView = (TextView) listItemView.findViewById(R.id.description);
         descriptionTextView.setText(currentBook.getDescription());
+
+        TextView moreInfo = (TextView) listItemView.findViewById(R.id.more_info);
+        moreInfo.setText(R.string.more_info);
 
         return listItemView;
     }
