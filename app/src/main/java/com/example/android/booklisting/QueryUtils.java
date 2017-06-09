@@ -158,6 +158,7 @@ public class QueryUtils {
                 JSONObject currentBook = bookArray.getJSONObject(i);
                 JSONObject volumeInfo = currentBook.getJSONObject("volumeInfo");
                 String title = volumeInfo.getString("title");
+                String description = volumeInfo.getString("description");
                 JSONArray authorArray = volumeInfo.getJSONArray("authors");
                 String author = "";
 
@@ -169,7 +170,7 @@ public class QueryUtils {
                     }
                 }
 
-                books.add(new Book(author, title));
+                books.add(new Book(author, title, description));
                 String data = books.toString();
                 Log.v("extractBooks", data);
             }

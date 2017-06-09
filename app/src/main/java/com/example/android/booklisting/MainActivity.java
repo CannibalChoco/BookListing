@@ -5,17 +5,24 @@ import android.app.LoaderManager.LoaderCallbacks;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Loader;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.view.View.GONE;
 
 
 public class MainActivity extends AppCompatActivity implements
@@ -31,21 +38,39 @@ public class MainActivity extends AppCompatActivity implements
     private LoaderManager loaderManager;
     private BookAdapter adapter;
 
+    // TextView that is displayed when the list is empty
+    private TextView emptyStateTextView;
+    ProgressBar loadingIndicator;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.book_list);
 
         ListView bookListView = (ListView) findViewById(R.id.list);
+        emptyStateTextView = (TextView) findViewById(R.id.empty_state_text_view);
+        bookListView.setEmptyView(emptyStateTextView);
+        emptyStateTextView.setText(R.string.no_searches_made);
+
+        loadingIndicator = (ProgressBar) findViewById(R.id.loading_spinner);
+        loadingIndicator.setVisibility(GONE);
+
         adapter = new BookAdapter(this, new ArrayList<Book>());
         bookListView.setAdapter(adapter);
 
-        // Get a reference to the LoaderManager to interact with loaders
-        loaderManager = getLoaderManager();
-        loaderManager.initLoader(BOOK_LOADER_ID, null, MainActivity.this);
-
     }
 
+
+    public boolean isConnected(){
+        ConnectivityManager connectivityManager = (ConnectivityManager)
+                getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+
+        return isConnected;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -54,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements
 
         // Associate searchable configuration with the SearchView
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        final SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
         // set onQueryTextListener
@@ -62,11 +87,22 @@ public class MainActivity extends AppCompatActivity implements
 
             @Override
             public boolean onQueryTextSubmit(String query) {
-                // create new query url
-                createQueryUrl(query);
 
-                // restart loader
-                getLoaderManager().restartLoader(BOOK_LOADER_ID, null, MainActivity.this);
+                searchView.onActionViewCollapsed();
+
+                // check for network connection
+                if (isConnected()) {
+                    loaderManager = getLoaderManager();
+                    // create new query url
+                    createQueryUrl(query);
+                    // restart loader
+                    loaderManager.restartLoader(BOOK_LOADER_ID, null, MainActivity.this);
+                    loaderManager.initLoader(BOOK_LOADER_ID, null, MainActivity.this);
+                    loadingIndicator.setVisibility(View.VISIBLE);
+                } else {
+                    emptyStateTextView.setText(R.string.no_internet_connection);
+                    loadingIndicator.setVisibility(GONE);
+                }
 
                 return true;
             }
@@ -91,13 +127,15 @@ public class MainActivity extends AppCompatActivity implements
     public void onLoadFinished(Loader<List<Book>> loader, List<Book> books) {
         Log.i(LOG_TAG, "TEST: onLoadFinished()");
 
+        loadingIndicator.setVisibility(GONE);
+        emptyStateTextView.setText(R.string.no_books_found);
+
         adapter.clear();
         // If there is a valid list of {@link Book}s, then add them to the adapter's
         // data set. This will trigger the ListView to update.
         if (books != null && !books.isEmpty()) {
             adapter.addAll(books);
         }
-
     }
 
     @Override
