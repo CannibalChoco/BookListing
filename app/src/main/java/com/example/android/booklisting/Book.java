@@ -7,11 +7,6 @@ public class Book {
     private String description;
     private String url;
 
-    public Book (String author, String title, String description){
-        this.author = author;
-        this.title = title;
-        this.description = description;
-    }
 
     public Book (String author, String title, String description, String url){
         this.author = author;

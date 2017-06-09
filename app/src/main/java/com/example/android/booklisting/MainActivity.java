@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements
         ListView bookListView = (ListView) findViewById(R.id.list);
         emptyStateTextView = (TextView) findViewById(R.id.empty_state_text_view);
         bookListView.setEmptyView(emptyStateTextView);
-        emptyStateTextView.setText(R.string.no_searches_made);
+        emptyStateTextView.setText(R.string.enter_query);
 
         loadingIndicator = (ProgressBar) findViewById(R.id.loading_spinner);
         loadingIndicator.setVisibility(GONE);

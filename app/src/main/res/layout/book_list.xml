@@ -7,18 +7,12 @@
     <!-- Empty view is only visible when the list has no items. -->
     <TextView
         android:id="@+id/empty_state_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true" />
+        style="@style/EmptyStateTextViewStyle" />
 
 
     <ListView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:divider="@null"
-        android:dividerHeight="0dp"
-        android:orientation="vertical" />
+        style="@style/ListViewStyle" />
 
     <!-- ProgressBar view is only visible while the list is loading. -->
     <ProgressBar
