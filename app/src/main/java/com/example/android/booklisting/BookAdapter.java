@@ -10,9 +10,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class BookAdapter extends ArrayAdapter{
+public class BookAdapter extends ArrayAdapter {
 
-    public BookAdapter(Activity context, ArrayList<Book> books){
+    public BookAdapter(Activity context, ArrayList<Book> books) {
         super(context, 0, books);
     }
 

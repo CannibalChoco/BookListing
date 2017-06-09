@@ -22,7 +22,7 @@ public class BookLoader extends AsyncTaskLoader<List<Book>> {
      * Constructs a new {@link BookLoader}.
      *
      * @param context of the activity
-     * @param url to load data from
+     * @param url     to load data from
      */
     public BookLoader(Context context, String url) {
         //call the super class constructor
@@ -39,7 +39,7 @@ public class BookLoader extends AsyncTaskLoader<List<Book>> {
     @Override
     public List<Book> loadInBackground() {
         // Don't perform the request if there are no URLs, or the first URL is null.
-        if ( url == null) {
+        if (url == null) {
             return null;
         }
 

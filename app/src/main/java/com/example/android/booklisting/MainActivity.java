@@ -12,7 +12,6 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -28,7 +27,7 @@ import static android.view.View.GONE;
 
 
 public class MainActivity extends AppCompatActivity implements
-        LoaderCallbacks<List<Book>>{
+        LoaderCallbacks<List<Book>> {
 
     private static final String LOG_TAG = MainActivity.class.getName();
     private static final int BOOK_LOADER_ID = 1;
@@ -78,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
-    public boolean isConnected(){
+    public boolean isConnected() {
         ConnectivityManager connectivityManager = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
@@ -99,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
         // set onQueryTextListener
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -162,7 +161,7 @@ public class MainActivity extends AppCompatActivity implements
      * @param query
      * @return
      */
-    public void createQueryUrl(String query){
+    public void createQueryUrl(String query) {
         String urlQuery = query.replaceAll(" ", "+");
         queryUrl = baseUrl + urlQuery;
     }

@@ -8,7 +8,7 @@ public class Book {
     private String url;
 
 
-    public Book (String author, String title, String description, String url){
+    public Book(String author, String title, String description, String url) {
         this.author = author;
         this.title = title;
         this.description = description;
@@ -19,7 +19,9 @@ public class Book {
         return title;
     }
 
-    public String getAuthor() { return author; }
+    public String getAuthor() {
+        return author;
+    }
 
     public String getDescription() {
         return description;

@@ -152,7 +152,7 @@ public class QueryUtils {
             JSONObject root = new JSONObject(bookJsonResponse);
             JSONArray bookArray = root.getJSONArray("items");
 
-            for (int i = 0, n = bookArray.length(); i < n; i++){
+            for (int i = 0, n = bookArray.length(); i < n; i++) {
                 JSONObject currentBook = bookArray.getJSONObject(i);
                 JSONObject volumeInfo = currentBook.getJSONObject("volumeInfo");
                 String title = volumeInfo.getString("title");
@@ -161,10 +161,10 @@ public class QueryUtils {
                 JSONArray authorArray = volumeInfo.getJSONArray("authors");
                 String author = "";
 
-                for (int j = 0, m = authorArray.length(); j < m; j++){
+                for (int j = 0, m = authorArray.length(); j < m; j++) {
                     author = author + authorArray.getString(j);
 
-                    if (m > 1 && j != (m - 1)){
+                    if (m > 1 && j != (m - 1)) {
                         author += ", ";
                     }
                 }
