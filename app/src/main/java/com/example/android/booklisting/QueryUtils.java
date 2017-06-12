@@ -28,6 +28,11 @@ import static android.os.Build.VERSION_CODES.M;
 
 public class QueryUtils {
     private static final String LOG_TAG = QueryUtils.class.getName();
+    public static final int URL_READ_TIMEOUT = 10000; /* milliseconds */
+    public static final int URL_CONNECT_TIMEOUT = 15000; /* milliseconds */
+    public static final int URL_RESPONSE_OK = 200;
+    public static final int MORE_THAN_ONE_AUTHOR = 1;
+
 
     /**
      * Create a private constructor because no one should ever create a {@link QueryUtils} object.
@@ -87,14 +92,14 @@ public class QueryUtils {
         InputStream inputStream = null;
         try {
             urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setReadTimeout(10000 /* milliseconds */);
-            urlConnection.setConnectTimeout(15000 /* milliseconds */);
+            urlConnection.setReadTimeout(URL_READ_TIMEOUT);
+            urlConnection.setConnectTimeout(URL_CONNECT_TIMEOUT);
             urlConnection.setRequestMethod("GET");
             urlConnection.connect();
 
             // If the request was successful (response code 200),
             // then read the input stream and parse the response.
-            if (urlConnection.getResponseCode() == 200) {
+            if (urlConnection.getResponseCode() == URL_RESPONSE_OK) {
                 inputStream = urlConnection.getInputStream();
                 jsonResponse = readFromStream(inputStream);
             } else {
@@ -176,10 +181,11 @@ public class QueryUtils {
                     JSONArray authorArray = volumeInfo.getJSONArray("authors");
 
 
-                    for (int j = 0, m = authorArray.length(); j < m; j++) {
+                    for (int j = 0, authorCount = authorArray.length(); j < authorCount; j++) {
                         author = author + authorArray.getString(j);
 
-                        if (m > 1 && j != (m - 1)) {
+                        if (authorCount > MORE_THAN_ONE_AUTHOR && j !=
+                                (authorCount - MORE_THAN_ONE_AUTHOR)) {
                             author += ", ";
                         }
                     }

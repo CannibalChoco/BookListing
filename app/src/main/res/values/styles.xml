@@ -67,6 +67,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_centerInParent">true</item>
+        <item name="android:layout_gravity">center</item>
     </style>
 
     <style name="ListViewStyle">
@@ -75,6 +76,7 @@
         <item name="android:divider">@null</item>
         <item name="android:dividerHeight">@dimen/divider_height</item>
         <item name="android:orientation">vertical</item>
+        <item name="android:layout_gravity">center</item>
     </style>
 
 </resources>
