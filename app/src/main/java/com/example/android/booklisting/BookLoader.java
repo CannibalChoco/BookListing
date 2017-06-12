@@ -44,7 +44,7 @@ public class BookLoader extends AsyncTaskLoader<List<Book>> {
         }
 
         // Perform the HTTP request for book data and process the response.
-        List<Book> books = QueryUtils.fetchBookData(url);
-        return books;
+        return QueryUtils.fetchBookData(url);
     }
+
 }

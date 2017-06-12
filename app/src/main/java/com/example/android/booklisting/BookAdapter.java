@@ -19,26 +19,41 @@ public class BookAdapter extends ArrayAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        View listItemView = convertView;
-        if (listItemView == null) {
-            listItemView = LayoutInflater.from(getContext()).inflate
+        ViewHolder viewHolder;
+
+        if (convertView == null) {
+            convertView = LayoutInflater.from(getContext()).inflate
                     (R.layout.list_item, parent, false);
+
+            viewHolder = new ViewHolder(convertView);
+            convertView.setTag(viewHolder);
+        }else{
+            viewHolder = (ViewHolder) convertView.getTag();
         }
 
         Book currentBook = (Book) getItem(position);
+        viewHolder.authorsTextView.setText(currentBook.getAuthor());
+        viewHolder.descriptionTextView.setText(currentBook.getDescription());
+        viewHolder.titleTextView.setText(currentBook.getTitle());
+        // TODO: shouldn't set it every time, because it never changes
+        viewHolder.moreInfoTextView.setText(R.string.more_info);
 
-        TextView authorsTextView = (TextView) listItemView.findViewById(R.id.author);
-        authorsTextView.setText(currentBook.getAuthor());
+        return convertView;
+    }
 
-        TextView titleTextView = (TextView) listItemView.findViewById(R.id.title);
-        titleTextView.setText(currentBook.getTitle());
+    class ViewHolder {
+        private TextView authorsTextView;
+        private TextView titleTextView;
+        private TextView descriptionTextView;
+        private TextView moreInfoTextView;
 
-        TextView descriptionTextView = (TextView) listItemView.findViewById(R.id.description);
-        descriptionTextView.setText(currentBook.getDescription());
+        public ViewHolder( View view){
+            this.authorsTextView = (TextView) view.findViewById(R.id.author);
+            this.titleTextView = (TextView) view.findViewById(R.id.title);
+            this.descriptionTextView = (TextView) view.findViewById(R.id.description);
+            this.moreInfoTextView = (TextView) view.findViewById(R.id.more_info);
 
-        TextView moreInfo = (TextView) listItemView.findViewById(R.id.more_info);
-        moreInfo.setText(R.string.more_info);
+        }
 
-        return listItemView;
     }
 }
