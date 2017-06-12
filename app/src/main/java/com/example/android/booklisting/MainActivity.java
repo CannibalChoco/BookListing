@@ -115,6 +115,7 @@ public class MainActivity extends AppCompatActivity implements
                     loaderManager.initLoader(BOOK_LOADER_ID, null, MainActivity.this);
                     loadingIndicator.setVisibility(View.VISIBLE);
                 } else {
+                    adapter.clear();
                     emptyStateTextView.setText(R.string.no_internet_connection);
                     loadingIndicator.setVisibility(GONE);
                 }
@@ -158,8 +159,7 @@ public class MainActivity extends AppCompatActivity implements
     /**
      * Concat the user query with the base url
      *
-     * @param query
-     * @return
+     * @param query users query
      */
     public void createQueryUrl(String query) {
         String urlQuery = query.replaceAll(" ", "+");
